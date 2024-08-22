@@ -95,6 +95,7 @@ async function progressiveText(text: string, el: HTMLElement) {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const hideElement = (el: HTMLElement) => el.style.visibility = 'hidden'
+const showElement = (el: HTMLElement) => el.style.visibility = 'inherit'
 
 function blinkBackground(colors:string[], interval=500) {
   const [bodyEl]= document.getElementsByTagName('body')!;
