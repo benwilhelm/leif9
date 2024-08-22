@@ -11,14 +11,14 @@
       crossorigin="anonymous"
     />
     <title>Vite + TS</title>
-    <script type="module" crossorigin src="/leif9/assets/index-DQVYDBfv.js"></script>
+    <script type="module" crossorigin src="/leif9/assets/index-DtvN9niL.js"></script>
     <link rel="stylesheet" crossorigin href="/leif9/assets/index-D4hlkLGW.css">
   </head>
   <body>
     <div id="app">
       <p id="status">&nbsp;</p>
       <div id="clock">00:00</div>
-      <div>
+      <div id="letters">
         <span class="letter">&nbsp;</span>
         <span class="letter">&nbsp;</span>
         <span class="letter">&nbsp;</span>
@@ -31,6 +31,13 @@
         <span class="letter">&nbsp;</span>
       </div>
       <p id="prompt">&nbsp;</p>
+      <audio id="alarm_audio">
+        <source src="./honk-alarm-repeat-loop-101015.mp3" type="audio/mpeg">
+      </audio>
+
+      <audio id="success_audio">
+        <source src="./carnival-109979.mp3" type="audio/mpeg">
+      </audio>
 
       <div class="hidden">
         <input id="secret_input" />
