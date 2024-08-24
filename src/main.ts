@@ -93,7 +93,7 @@ timer.addEventListener('expire', async () => {
 const keyupListener = () => {
   const letters = inputEl.value.toUpperCase().split('');
   letterEls.forEach((el, idx) => {
-    el.innerHTML = letters[idx] || '&nbsp;';
+    el.innerHTML = letters[idx]?.trim() || '&nbsp;';
   });
 };
 inputEl.addEventListener('keyup', keyupListener);
