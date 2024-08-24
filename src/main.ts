@@ -2,7 +2,12 @@ import './style.css';
 import { Timer } from './timer';
 import { Solution } from './solution';
 
-const timer = new Timer(5);
+const urlParams = new URLSearchParams(document.location.search)
+const tParam = urlParams.get('t')
+console.log(tParam)
+const t = tParam ? +tParam : 3600
+
+const timer = new Timer(t);
 const solution = new Solution();
 
 const [bodyEl] = document.getElementsByTagName('body')!;
