@@ -2,7 +2,7 @@ import './style.css';
 import { Timer } from './timer';
 import { Solution } from './solution';
 
-const timer = new Timer();
+const timer = new Timer(5);
 const solution = new Solution();
 
 const [bodyEl] = document.getElementsByTagName('body')!;
@@ -22,6 +22,12 @@ const inputEl: HTMLInputElement = document.getElementById('secret_input')!;
 const letterEls = document.querySelectorAll<HTMLElement>('.letter')!;
 const lettersEl = document.getElementById('letters')!;
 
+const messages = {
+  enterAccessCode: "Enter Access Code",
+  incorrectAccessCode: "INCORRECT ACCESS CODE",
+  accessCodeAccepted: 'ACCESS CODE ACCEPTED'
+}
+
 const keydownHandler = (ev: KeyboardEvent) => {
   if (ev.key === 'Enter') {
     const guess = inputEl.value;
@@ -36,7 +42,6 @@ const firstKeyHandler = async (_ev: KeyboardEvent) => {
   
   await delay(100)
   showElement(clockEl)
-  showElement(lettersEl)
   timer.start();
   window.addEventListener('keydown', keydownHandler);
   window.removeEventListener('keydown', firstKeyHandler);
@@ -46,9 +51,9 @@ window.addEventListener('keydown', firstKeyHandler);
 
 solution.addEventListener('failure', async () => {
   inputEl.value = '';
-  await progressiveText('INCORRECT DEACTIVATION KEY', promptEl);
+  await progressiveText(messages.incorrectAccessCode, promptEl);
   await delay(1500);
-  await progressiveText('Enter deactivation key', promptEl);
+  await progressiveText(messages.enterAccessCode, promptEl);
 });
 
 solution.addEventListener('success', async () => {
@@ -56,14 +61,16 @@ solution.addEventListener('success', async () => {
   inputEl.removeEventListener('keyup', keyupListener);
   window.removeEventListener('keydown', keydownHandler);
   bodyEl.style.backgroundColor = 'green';
-  await progressiveText('DEACTIVATION KEY ACCEPTED', promptEl);
+  await progressiveText(messages.accessCodeAccepted, promptEl);
   await progressiveText('Self-destruct mode DEACTIVATED', statusEl);
+  await delay(1000);
+  await progressiveText('Stabilizing Underpantsium Stores', statusEl)
   blinkBackground(['green', 'blue', 'yellow', 'orange'], 500);
   successAudioEl.play()
 });
 
 timer.addEventListener('start', async () => {
-  await progressiveText('Enter deactivation key', promptEl);
+  await progressiveText(messages.enterAccessCode, promptEl);
 });
 
 timer.addEventListener('tick', (timeRemaining) => {
@@ -71,11 +78,11 @@ timer.addEventListener('tick', (timeRemaining) => {
 });
 
 timer.addEventListener('expire', async () => {
-  letterEls.forEach(hideElement);
+  hideElement(lettersEl);
   hideElement(promptEl);
-  await progressiveText('INITIATING SELF-DESTRUCT SEQUENCE', statusEl);
   blinkBackground(['red', 'black'], 610);
   alarmAudioEl.play()
+  await progressiveText('INITIATING SELF-DESTRUCT SEQUENCE', statusEl);
 });
 
 const keyupListener = () => {
@@ -125,4 +132,4 @@ function blinkBackground(colors: string[], interval = 500) {
 
 
 hideElement(clockEl)
-hideElement(lettersEl)
+promptEl.innerHTML = messages.enterAccessCode

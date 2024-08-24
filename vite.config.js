@@ -1,3 +1,3 @@
 export default {
-  base: 'leif9'
+  base: '/leif9'
 }
