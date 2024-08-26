@@ -14,13 +14,14 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-size: 2rem;
 }
 
 #clock {
   font-size: 3rem;
 }
 
-.hidden {
+#secret_input {
   position: absolute;
   top: -100vh;
   left: 0;
@@ -31,4 +32,63 @@ body {
   border: 1px solid gray;
   width: 1.2em;
   height: 2em;
+}
+
+#menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  padding: .5em 1em;
+  overflow: hidden;
+}
+
+#flyout {
+  background-color: #222;
+  border-right: 1px solid #777;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40vw;
+  height: 100vh;
+  padding: 3em 1em 1em;
+
+  transition: left .25s;
+}
+
+#menu.hidden #flyout {
+  left: -40vw;
+}
+
+#overlay {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#menu.hidden #overlay {
+  display: none;
+}
+
+.pancake {
+  position: relative;
+  width: 2rem;
+  height: 1rem;
+}
+
+.pancake > div {
+  width: 100%;
+  background-color: #fff;
+  height: 30%;
+  margin: .3rem;
+  border-radius: 2px;
 }

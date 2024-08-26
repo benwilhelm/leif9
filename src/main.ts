@@ -4,7 +4,6 @@ import { Solution } from './solution';
 
 const urlParams = new URLSearchParams(document.location.search)
 const tParam = urlParams.get('t')
-console.log(tParam)
 const t = tParam ? +tParam : 3600
 
 const timer = new Timer(t);
@@ -14,6 +13,17 @@ const [bodyEl] = document.getElementsByTagName('body')!;
 const statusEl = document.getElementById('status')!;
 const clockEl = document.getElementById('clock')!;
 const promptEl = document.getElementById('prompt')!;
+const menuEl = document.getElementById('menu')!
+const overlayEl = document.getElementById('overlay')!
+const menuToggleEl = document.getElementById('toggle')!
+
+menuToggleEl.addEventListener('click', (_evt) => {
+  menuEl.classList.toggle('hidden')
+})
+
+overlayEl.addEventListener('click', (_evt) => {
+  menuEl.classList.toggle('hidden')
+})
 
 // @ts-expect-error
 const alarmAudioEl: HTMLAudioElement = document.getElementById('alarm_audio')!

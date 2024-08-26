@@ -28,22 +28,39 @@
         <span class="letter">&nbsp;</span>
       </div>
       <p id="prompt">&nbsp;</p>
-      <hr>
+      <hr />
       <p id="status">&nbsp;</p>
       <div id="clock">00:00</div>
 
       <audio id="alarm_audio">
-        <source src="./honk-alarm-repeat-loop-101015.mp3" type="audio/mpeg">
+        <source src="./honk-alarm-repeat-loop-101015.mp3" type="audio/mpeg" />
       </audio>
 
       <audio id="success_audio">
-        <source src="./carnival-109979.mp3" type="audio/mpeg">
+        <source src="./carnival-109979.mp3" type="audio/mpeg" />
       </audio>
 
-      <div class="hidden">
-        <input id="secret_input" />
+      <input id="secret_input" />
+    </div>
+
+    <div id="menu" class="hidden">
+      <div id="overlay"></div>
+      <div id="flyout">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolorem, quis aliquam
+          magni sit corrupti perspiciatis impedit consequuntur ratione placeat, est eum laborum quas
+          vitae doloribus id, molestias nulla quaerat.
+        </p>
+      </div>
+      <div id="toggle">
+        <div class="pancake">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
