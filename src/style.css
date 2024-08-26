@@ -62,6 +62,15 @@ body {
   transition: left .25s;
 }
 
+#flyout .text-input {
+  margin: 1rem 0;
+}
+
+#flyout .text-input label,
+#flyout .text-input input {
+  display: block
+}
+
 #menu.hidden #flyout {
   left: -40vw;
 }

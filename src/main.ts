@@ -1,36 +1,37 @@
 import './style.css';
-import { Timer } from './timer';
-import { Solution } from './solution';
+import { Timer } from './lib/timer';
+import { Solution } from './lib/solution';
+import { TextLibrary } from './lib/text-library';
 
-const urlParams = new URLSearchParams(document.location.search)
-const tParam = urlParams.get('t')
-const t = tParam ? +tParam : 3600
+const urlParams = new URLSearchParams(document.location.search);
+const tParam = urlParams.get('t');
+const t = tParam ? +tParam : 3600;
 
 const timer = new Timer(t);
 const solution = new Solution();
 
 const [bodyEl] = document.getElementsByTagName('body')!;
+const titleEl = document.getElementById('title')!
 const statusEl = document.getElementById('status')!;
 const clockEl = document.getElementById('clock')!;
 const promptEl = document.getElementById('prompt')!;
-const menuEl = document.getElementById('menu')!
-const overlayEl = document.getElementById('overlay')!
-const menuToggleEl = document.getElementById('toggle')!
+const menuEl = document.getElementById('menu')!;
+const overlayEl = document.getElementById('overlay')!;
+const menuToggleEl = document.getElementById('toggle')!;
 
 menuToggleEl.addEventListener('click', (_evt) => {
-  menuEl.classList.toggle('hidden')
-})
+  menuEl.classList.toggle('hidden');
+});
 
 overlayEl.addEventListener('click', (_evt) => {
-  menuEl.classList.toggle('hidden')
-})
+  menuEl.classList.toggle('hidden');
+});
 
 // @ts-expect-error
-const alarmAudioEl: HTMLAudioElement = document.getElementById('alarm_audio')!
-
+const alarmAudioEl: HTMLAudioElement = document.getElementById('alarm_audio')!;
 
 // @ts-expect-error
-const successAudioEl: HTMLAudioElement = document.getElementById('success_audio')!
+const successAudioEl: HTMLAudioElement = document.getElementById('success_audio')!;
 
 // @ts-expect-error
 const inputEl: HTMLInputElement = document.getElementById('secret_input')!;
@@ -38,10 +39,31 @@ const letterEls = document.querySelectorAll<HTMLElement>('.letter')!;
 const lettersEl = document.getElementById('letters')!;
 
 const messages = {
-  enterAccessCode: "Enter Access Code",
-  incorrectAccessCode: "INCORRECT ACCESS CODE",
-  accessCodeAccepted: 'ACCESS CODE ACCEPTED'
-}
+  gizmoName: 'Retro Encabulator',
+  enterAccessCode: 'Enter Access Code',
+  incorrectAccessCode: 'INCORRECT ACCESS CODE',
+  accessCodeAccepted: 'ACCESS CODE ACCEPTED',
+  activated: 'SELF-DESTRUCT MODE ACTIVATED',
+  deactivated: 'Self-destruct mode DEACTIVATED',
+  rescueAction: 'Stabilizing Underpantsium Stores',
+  timeUp: 'INITIATING SELF-DESTRUCT SEQUENCE'
+};
+
+const textLibrary = new TextLibrary(messages);
+document.querySelectorAll('#flyout .text-input input[type=text]').forEach((el) => {
+  el.addEventListener('change', (evt) =>{
+    // @ts-expect-error
+    textLibrary.set(el.getAttribute('name'), evt.target.value)
+  });
+});
+
+textLibrary.subscribe('gizmoName', (val) => {
+  titleEl.innerText = val
+})
+
+textLibrary.subscribe('enterAccessCode', (val) => {
+  promptEl.innerText = val
+})
 
 const keydownHandler = (ev: KeyboardEvent) => {
   if (ev.key === 'Enter') {
@@ -51,12 +73,13 @@ const keydownHandler = (ev: KeyboardEvent) => {
   }
 };
 
-const firstKeyHandler = async (_ev: KeyboardEvent) => {  
+const firstKeyHandler = async (ev: KeyboardEvent) => {
+  if (ev.key !== 'Enter') return;
   bodyEl.style.backgroundColor = '#A00';
-  await progressiveText('SELF-DESTRUCT MODE ACTIVATED', statusEl);
-  
-  await delay(100)
-  showElement(clockEl)
+  await progressiveText(messages.activated, statusEl);
+
+  await delay(100);
+  showElement(clockEl);
   timer.start();
   window.addEventListener('keydown', keydownHandler);
   window.removeEventListener('keydown', firstKeyHandler);
@@ -77,11 +100,11 @@ solution.addEventListener('success', async () => {
   window.removeEventListener('keydown', keydownHandler);
   bodyEl.style.backgroundColor = 'green';
   await progressiveText(messages.accessCodeAccepted, promptEl);
-  await progressiveText('Self-destruct mode DEACTIVATED', statusEl);
+  await progressiveText(messages.deactivated, statusEl);
   await delay(1000);
-  await progressiveText('Stabilizing Underpantsium Stores', statusEl)
+  await progressiveText(messages.rescueAction, statusEl);
   blinkBackground(['green', 'blue', 'yellow', 'orange'], 500);
-  successAudioEl.play()
+  successAudioEl.play();
 });
 
 timer.addEventListener('start', async () => {
@@ -96,8 +119,8 @@ timer.addEventListener('expire', async () => {
   hideElement(lettersEl);
   hideElement(promptEl);
   blinkBackground(['red', 'black'], 610);
-  alarmAudioEl.play()
-  await progressiveText('INITIATING SELF-DESTRUCT SEQUENCE', statusEl);
+  alarmAudioEl.play();
+  await progressiveText(messages.timeUp, statusEl);
 });
 
 const keyupListener = () => {
@@ -135,7 +158,7 @@ const hideElement = (el: HTMLElement) => (el.style.visibility = 'hidden');
 const showElement = (el: HTMLElement) => (el.style.visibility = 'inherit');
 
 function blinkBackground(colors: string[], interval = 500) {
-  const colorQ = [...colors]
+  const colorQ = [...colors];
   bodyEl.style.backgroundColor = colorQ[0];
   const intervalId = setInterval(() => {
     colorQ.push(colorQ.shift()!);
@@ -145,6 +168,5 @@ function blinkBackground(colors: string[], interval = 500) {
   return () => clearInterval(intervalId);
 }
 
-
-hideElement(clockEl)
-promptEl.innerHTML = messages.enterAccessCode
+hideElement(clockEl);
+promptEl.innerHTML = messages.enterAccessCode;

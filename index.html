@@ -14,7 +14,7 @@
   </head>
   <body>
     <div id="app">
-      <h3>Retro Encabulator</h3>
+      <h3 id="title">Retro Encabulator</h3>
       <div id="letters">
         <span class="letter">&nbsp;</span>
         <span class="letter">&nbsp;</span>
@@ -46,11 +46,26 @@
     <div id="menu" class="hidden">
       <div id="overlay"></div>
       <div id="flyout">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolorem, quis aliquam
-          magni sit corrupti perspiciatis impedit consequuntur ratione placeat, est eum laborum quas
-          vitae doloribus id, molestias nulla quaerat.
-        </p>
+        <div class="text-input">
+          <label for="gizmoName">Device Name</label>
+          <input type="text" name="gizmoName">
+        </div>
+
+        <div class="text-input">
+          <label for="enterAccessCode">Prompt for Code</label>
+          <input type="text" name="enterAccessCode">
+        </div>
+        
+        <div class="text-input">
+          <label for="incorrectAccessCode">Incorrect Code</label>
+          <input type="text" name="incorrectAccessCode">
+        </div>
+        
+        <div class="text-input">
+          <label for="accessCodeAccepted">Code Accepted</label>
+          <input type="text" name="accessCodeAccepted">
+        </div>
+
       </div>
       <div id="toggle">
         <div class="pancake">
